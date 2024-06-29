@@ -1,0 +1,132 @@
+<!-- /views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+        /* Add your CSS here or use the external style.css file */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Smart-Farm<span>Solutions</span></h1>
+            <p class="tagline">Empowering local farmers with smart technology</p>
+        </div>
+    </header>
+
+    <section class="section" id="goal">
+        <div class="container">
+            <h2>Define Your Goal</h2>
+            <p>Our goal is to provide smart technology solutions that empower local farmers to achieve sustainability and efficiency in their farming practices.</p>
+        </div>
+    </section>
+
+    <section class="section" id="audience">
+        <div class="container">
+            <h2>Understand Your Audience</h2>
+            <p>We understand the unique challenges faced by local farmers and offer tailored solutions that address their specific needs and help them overcome their pain points.</p>
+        </div>
+    </section>
+
+    <section class="section" id="headline">
+        <div class="container">
+            <h2>Craft a Compelling Headline</h2>
+            <p>Transform Your Farm with Data-Driven Smart Technology Solutions</p>
+        </div>
+    </section>
+
+    <section class="section" id="content">
+        <div class="container">
+            <h2>Create Engaging Content</h2>
+            <p>Discover how our innovative technology can increase your farm's productivity and sustainability. Learn from the success stories of farmers who have already benefited from our solutions.</p>
+        </div>
+    </section>
+
+    <section class="section" id="design">
+        <div class="container">
+            <h2>Design for Usability</h2>
+            <p>Our platform is designed with simplicity in mind. Enjoy a seamless user experience with intuitive navigation on any device.</p>
+        </div>
+    </section>
+
+    <section class="section" id="cta">
+        <div class="container">
+            <h2>Optimize Your Call-To-Action</h2>
+            <p>Take the first step towards transforming your farming practices. Start your journey with our smart farming solutions today!</p>
+            <button class="cta-button" onclick="showPopup()">Get Started Now</button>
+        </div>
+    </section>
+
+    <section class="section" id="form">
+        <div class="container">
+            <h2>Include a Form</h2>
+            <p>Sign up now for a personalized consultation to see how our technology can benefit your farm.</p>
+            <form id="consultationForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <button type="submit">Get Consultation</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Smart-Farm Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Popup Modal -->
+    <div class="popup-modal" id="popupModal">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h3>Welcome to Smart-Farm Solutions</h3>
+            <p>Thank you for your interest! We will contact you shortly to discuss how our smart farming solutions can benefit your agricultural practices.</p>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popupModal').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+
+        document.getElementById('consultationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.querySelector('input[name="name"]').value;
+            const email = document.querySelector('input[name="email"]').value;
+
+            if (name && email) {
+                showPopup();
+
+                fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Form submitted successfully!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting the form.');
+                });
+            } else {
+                alert('Please fill out all fields.');
+            }
+        });
+    </script>
+</body>
+</html>
